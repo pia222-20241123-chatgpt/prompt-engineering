@@ -71,6 +71,7 @@
     - 긴 텍스트를 단축어 또는 클릭으로 입력할 수 있는 도구
     - Text Blaze는 텍스트 확장 도구 중 하나로,텍스트 확장 툴은 AI 시대 이전부터 개발자들이 사용하던 도구 중 하나.
 
+![image](https://github.com/user-attachments/assets/0abbb686-f527-404e-9a45-65752849fed4)
 
 
 
