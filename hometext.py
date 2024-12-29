@@ -56,7 +56,7 @@ time.sleep(2)
 # 9. 사업자 등록번호 조회
 # mf_wfHeader_UTXPPAAA24_wframe_iptBsno
 business_num = driver.find_element(By.ID, "mf_wfHeader_UTXPPAAA24_wframe_iptBsno")
-business_num.send_keys("1416800280")  # 사업자 등록번호
+business_num.send_keys("")  # 사업자 등록번호
 time.sleep(2)
 button = WebDriverWait(driver, 10).until(
     EC.presence_of_element_located((By.XPATH, "//input[contains(@class, 'w2trigger') and @value='조회']"))
@@ -118,31 +118,72 @@ element = driver.find_element(By.XPATH, '//*[@id="menuAtag_4608020100"]')
 element.click()
 time.sleep(2)
 
-#분기별 선택  기본 1분기
+
+
 radio_button = driver.find_element(By.ID, "mf_txppWframe_rdoSearch_input_2")
-radio_button.click()
+driver.execute_script("arguments[0].click();", radio_button)  # 자바스크립트를 이용한 클릭
+time.sleep(2)
 
-# 조회
-search_button = driver.find_element(By.XPATH, "//input[@value='조회']")
-search_button.click()
-time.sleep(3)
+# #분기별 선택  기본 1분기 ------------------------------
+# # 조회
+# search_button = driver.find_element(By.XPATH, "//input[@value='조회']")
+# search_button.click()
+# time.sleep(2)
 
-#내려 받기
-download_button = driver.find_element(By.XPATH, "//input[@value='내려받기']")
-download_button.click()
-time.sleep(1)
+# #내려 받기
+# download_button = driver.find_element(By.XPATH, "//input[@value='내려받기']")
+# download_button.click()
+# time.sleep(1)
 
-# 엑셀 선택
-excel_button = driver.find_element(By.XPATH, "//input[@value='엑셀']")
-excel_button.click()
-time.sleep(1)
-# 파일을 받으시겠습니까 -확인
-alert = Alert(driver)
-alert.accept() # 확인버튼으로 팝업 닫힘
+# # 엑셀 선택
+# excel_button = driver.find_element(By.XPATH, "//input[@value='엑셀']")
+# excel_button.click()
+# time.sleep(1)
+# # 파일을 받으시겠습니까 -확인
+# alert = Alert(driver)
+# alert.accept() # 확인버튼으로 팝업 닫힘
 
-#닫기
-close_button = driver.find_element(By.XPATH, "//input[@value='닫기']")
-close_button.click()
+# #닫기
+# close_button = driver.find_element(By.ID, "mf_txppWframe_UTECRCB055_wframe_trigger10001") 
+# close_button.click()
+# time.sleep(20)
 
-# 2분기
+# Select 객체 생성 (분기 선택 드롭다운)
+from selenium.webdriver.support.ui import Select
+quarter_select = Select(driver.find_element(By.ID, "mf_txppWframe_selectQrt"))
+
+# 분기별 옵션 반복 처리
+for i in range(1, 5):  # 1분기부터 4분기까지
+    print(f"Processing {i}분기...")
+    
+    # 분기 선택
+    quarter_select.select_by_visible_text(f"{i}분기")  # 예: "1분기", "2분기" 등
+    time.sleep(2)  # 선택 후 페이지 로드 대기
+    
+    # 조회 버튼 클릭
+    search_button = driver.find_element(By.XPATH, "//input[@value='조회']")
+    search_button.click()
+    time.sleep(2)  # 조회 결과 로드 대기
+    
+    # 내려받기 버튼 클릭
+    download_button = driver.find_element(By.XPATH, "//input[@value='내려받기']")
+    download_button.click()
+    time.sleep(1)
+    
+    # 엑셀 선택
+    excel_button = driver.find_element(By.XPATH, "//input[@value='엑셀']")
+    excel_button.click()
+    time.sleep(1)
+    
+    # 파일 다운로드 확인 팝업 처리
+    alert = Alert(driver)
+    alert.accept()  # 확인 버튼으로 팝업 닫기
+    time.sleep(1)
+    
+    # 창 닫기
+    close_button = driver.find_element(By.ID, "mf_txppWframe_UTECRCB055_wframe_trigger10001")
+    close_button.click()
+    time.sleep(1)
+    
+    print(f"{i}분기 data processed successfully.")
 
