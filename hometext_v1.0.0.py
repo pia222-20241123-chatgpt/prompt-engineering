@@ -69,7 +69,7 @@ time.sleep(2)
 # 9. 사업자 등록번호 조회
 # mf_wfHeader_UTXPPAAA24_wframe_iptBsno
 button = driver.find_element(By.ID, "mf_wfHeader_UTXPPAAA24_wframe_iptBsno")
-button.send_keys("1416800280")  # 사업자 등록번호
+button.send_keys("")  # 사업자 등록번호
 time.sleep(2)
 button = WebDriverWait(driver, 10).until(
     EC.presence_of_element_located((By.XPATH, "//input[contains(@class, 'w2trigger') and @value='조회']"))

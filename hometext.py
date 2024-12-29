@@ -40,8 +40,8 @@ user_id_field = driver.find_element(By.ID, "mf_txppWframe_iptUserId")
 user_pw_field = driver.find_element(By.ID, "mf_txppWframe_iptUserPw")
 
 # 아이디와 비밀번호를 입력 (여기에 실제 값을 넣어야 함)
-user_id_field.send_keys("schmo60")  # 실제 아이디 입력
-user_pw_field.send_keys("y!q2w3e4r5t")  # 실제 비밀번호 입력
+user_id_field.send_keys("")  # 실제 아이디 입력
+user_pw_field.send_keys("")  # 실제 비밀번호 입력
 
 # 7. 로그인 버튼 클릭
 login_submit_button = driver.find_element(By.ID, "mf_txppWframe_anchor25")
