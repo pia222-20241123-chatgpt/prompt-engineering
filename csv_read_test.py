@@ -1,3 +1,4 @@
+from datetime import datetime
 import pandas as pd
 df = pd.read_csv('d:/bs_lists.csv')
 
@@ -10,5 +11,10 @@ for idx,current_id in enumerate(df.id):
     previous_id = current_id    
     print(df.loc[idx,'id'],df.loc[idx,'psw'],df.loc[idx,'business_no'])
 
+#  현재년도
 
+current_year = datetime.now().year
+print(current_year-1)
+
+print(len(df))
     

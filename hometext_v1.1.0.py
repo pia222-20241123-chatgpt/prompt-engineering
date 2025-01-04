@@ -1,6 +1,3 @@
-
-
-
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
@@ -148,16 +145,11 @@ def process(idx,driver,business_num):
     time.sleep(2)
 
 
-    #  분기별 선택
+
     radio_button = driver.find_element(By.ID, "mf_txppWframe_rdoSearch_input_2")
     driver.execute_script("arguments[0].click();", radio_button)  # 자바스크립트를 이용한 클릭
     time.sleep(2)
 
-    # 년도별 선택
-     # Select 객체 생성 (년도 선택 드롭다운)
-    from selenium.webdriver.support.ui import Select
-    year_select = Select(driver.find_element(By.ID, "mf_txppWframe_selectYear"))
-    
 
 
     # Select 객체 생성 (분기 선택 드롭다운)
@@ -229,35 +221,26 @@ def main():
     # 홈텍스 열기
     driver = init_config()
 
-    # 아이디 초기 값 설정
-    currnt_id = None
-    for idx, row in df.iterrows():
-        try:
-            id = row['id']
-            psw = row['psw']
-            bs_no = row['business_no']        
-            # 아이디 변경유무 확인
-            if id != currnt_id:
-                if currnt_id is not None:  # 로그인된 상태
-                    # 현재 로그인상태에서 로그아웃
-                    button = driver.find_element(By.XPATH, "//a[contains(@class, 'w2group') and @title='로그아웃']")
-                    driver.execute_script("arguments[0].click();", button)                    
-                    time.sleep(2) 
-                # 새 아이디로 로그인            
-                login(id,psw,driver)   
-                currnt_id = id    
-                
-                # 8. 사업장 전환
-                button = driver.find_element(By.ID,'mf_wfHeader_group1508')
-                button.click()
-                time.sleep(2)
+    # 로그인 및 사업장 전환
+    id = df.loc[0,'id']
+    psw = df.loc[0,'psw']
+    login(id,psw,driver)   
 
-                # 사업자 전환        
-                switch_bs(bs_no,driver)
-                process(idx,driver,bs_no)# 첨부파일 다운로드 및 일괄 처리
-                time.sleep(2)
-        except Exception as e:
-            print('error :',e)
+
+
+    for idx,bs_no in enumerate(df.business_no):
+        try:
+            # 8. 사업장 전환
+            button = driver.find_element(By.ID,'mf_wfHeader_group1508')
+            button.click()
+            time.sleep(2)
+
+            # 사업자 전환        
+            switch_bs(bs_no,driver)
+            process(idx,driver,bs_no)# 첨부파일 다운로드 및 일괄 처리
+            time.sleep(2)
+        except:
+            pass
 
 
     driver.quit()  # 작업 완료 후 브라우저 종료
