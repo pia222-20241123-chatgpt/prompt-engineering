@@ -222,7 +222,7 @@ def main():
                                 os.makedirs(business_dir)  # 사업자 디렉터리가 없으면 생성
                             
                             # 새 파일 이름 설정    
-                            new_file = os.path.join(business_dir, f"{bs_no}_{year}_{i}분기.xlsx")
+                            new_file = os.path.join(business_dir, f"{bs_no}_{year}_{i}분기.xls")
                             shutil.move(original_file, new_file)  # 파일 이동 및 이름 변경
                             print(f"Saved file: {new_file}")
                             
